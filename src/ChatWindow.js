@@ -1,29 +1,23 @@
 import React from 'react';
 import './ChatWindow.css';
 
-// Function to format the timestamp to the user's local timezone with AM/PM
-const formatTime = (date) => {
-  const options = {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true, // Ensure 12-hour format (AM/PM)
-  };
-  return date.toLocaleTimeString([], options); // Using user's local timezone
-};
-
 const ChatWindow = ({ messages }) => {
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
   return (
     <div className="chat-window">
-      {messages.map((message) => (
+      {messages.map((msg) => (
         <div
-          key={message.id}
-          className={`message ${message.sender === 'user' ? 'user' : 'other'}`}
-        >
-          <p>{message.text}</p>
-          <div className="timestamp">
-            {/* Format the timestamp according to the message's timestamp */}
-            {formatTime(new Date(message.timestamp))}
-          </div>
+          key={msg.id}
+          className={`message ${msg.sender === 'user' ? '.user' : '.other'}`} 
+          >
+          <p>{msg.body}</p>
+          <small className="timestamp">
+            {formatTimestamp(msg.created_at)} {/* Format timestamp here */}
+          </small>
         </div>
       ))}
     </div>
