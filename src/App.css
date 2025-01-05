@@ -1,23 +1,10 @@
-/* Centering the entire app on the page */
-body {
-  background-color: #333;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;  /* Horizontally center the content */
-  align-items: center;  /* Vertically center the content */
-  height: 100vh;  /* Full height of the viewport */
-  overflow: hidden;
-}
-
 .App {
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 800px; /* Control the max width of the app */
-  height: 80vh; /* Take up 80% of the viewport height */
-  background-color: #333;
-  border-radius: 12px;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  height: 100vh; /* Take the full viewport height */
+  background-color: #f4f4f4;
   padding: 20px;
   box-sizing: border-box;
+  flex-direction: column;
 }
