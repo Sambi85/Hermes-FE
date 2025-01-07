@@ -1,48 +1,10 @@
-/* Dark mode styles */
-body {
-  background-color: #333; /* Dark background for the entire window */
-  margin: 0;
-  font-family: Arial, sans-serif; /* Optional: add a font family */
-}
-
-
 .App {
-  text-align: center;
-  width: 80%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #333; /* Dark background */
-  color: #333;; /* Light text for contrast */
-}
-
-.input-container {
   display: flex;
-  align-items: center;
-  margin-top: 20px;  /* Space between messages and input area */
-}
-
-.message-input {
-  flex-grow: 1;
-  padding: 10px;
-  border: 1px solid #555; /* Darker border */
-  border-radius: 4px;
-  font-size: 14px;
-  background-color: #333; /* Dark background for input */
-  color: white; /* Light text for input */
-}
-
-.send-button {
-  padding: 10px;
-  margin-left: 10px;
-  border: none;
-  background-color: #007bff; /* Primary button color */
-  color: white; /* Button text */
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.send-button:hover {
-  background-color: #0056b3; /* Darker hover state */
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  height: 100vh; /* Take the full viewport height */
+  background-color: #f4f4f4;
+  padding: 20px;
+  box-sizing: border-box;
+  flex-direction: column;
 }
