@@ -13,7 +13,7 @@ const useChat = (conversationId, userId) => {
         const response = await fetch(`http://localhost:3000/api/v1/conversations/${conversationId}/messages`);
         if (response.ok) {
           const data = await response.json();
-          setMessages(data);  // Set fetched messages to state
+          setMessages(data);
         } else {
           console.error('Failed to fetch messages');
         }
