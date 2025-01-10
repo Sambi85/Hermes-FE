@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import LandingPage from './pages/LandingPage';
 import ChatWindow from './ChatWindow';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
-import './ChatWindow.css';
 
 const ChatPage = () => {
   return (
@@ -20,7 +19,7 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/chat" element={<ProtectedRoute element={ChatPage} />} />
+      <Route path="/conversations/:id" element={<ProtectedRoute element={ChatPage} />} />
     </Routes>
   );
 };
