@@ -1,33 +1,68 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom'; // to get the conversation id from the URL
+import { createConsumer } from '@rails/actioncable'; // WebSocket connection
 import './ChatWindow.css';
 
 const ChatWindow = () => {
   const { id } = useParams();  // Get the conversation ID from URL
   const [messages, setMessages] = useState([]);
-  const [messageInput, setMessageInput] = useState(""); // For input field
+  const [messageInput, setMessageInput] = useState("");
   const chatWindowRef = useRef(null);
+  const [channel, setChannel] = useState(null);
+  const userId = 1 // Replace with actual user ID......
 
-  useEffect(() => {
+  useEffect(() => { // Fetch messages when the component mounts
     const fetchMessages = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/v1/conversations/${id}/messages`, {
-          credentials: 'same-origin',
-        });
-
+        const response = await fetch(`http://localhost:3000/api/v1/conversations/${id}/messages`);
         if (response.ok) {
           const data = await response.json();
-          setMessages(data); // Set messages for this specific conversation
+          setMessages(data);
         } else {
-          throw new Error('Failed to fetch messages');
+          console.error('Failed to fetch messages');
         }
       } catch (error) {
-        console.error(error.message);
+        console.error('Error fetching messages:', error);
       }
     };
 
     fetchMessages();
-  }, [id]); // Re-fetch messages when the conversation ID changes
+  }, []); 
+
+  // Set up WebSocket connection using ActionCable
+  useEffect(() => {
+    const cable = createConsumer(`ws://localhost:3000/cable?user_id=${userId}`);
+    const newChannel = cable.subscriptions.create(
+      { channel: 'ChatChannel', conversation_id: id, user_id: userId },
+      {
+        received: (data) => {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { id: Date.now(), body: data.body, sender: data.sender, timestamp: new Date() },
+          ]);
+        },
+        sendMessage: (messageText) => {
+          newChannel.send({ message: messageText });
+        },
+      }
+    );
+
+    setChannel(newChannel);
+
+    return () => {
+      if (newChannel) {
+        newChannel.unsubscribe(); // Unsubscribe when component unmounts
+      }
+    };
+  }, [id]); // Reconnect if conversation ID changes
+
+  // Scroll to the bottom of the chat window whenever messages change
+  useEffect(() => {
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+    }
+  }, [messages]);
+
 
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
@@ -35,48 +70,37 @@ const ChatWindow = () => {
   };
 
   const getMessageClass = (msg) => {
-    return msg.user_id === 'user' ? 'user' : 'other';
+    console.log(msg);
+    return msg.sender_id === msg.user_id ? 'user' : 'other';
   };
-
-  useEffect(() => {
-    // Scroll to the bottom whenever messages change
-    if (chatWindowRef.current) {
-      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
-    }
-  }, [messages]);
 
   const handleInputChange = (e) => {
-    setMessageInput(e.target.value); // Update input value
+    setMessageInput(e.target.value);
   };
 
+  // Handle sending the message
   const handleSendMessage = async () => {
     if (messageInput.trim()) {
-      // Send message to server or API
+
       const newMessage = {
         body: messageInput,
-        user_id: 'user', // Assuming 'user' is the sender
-        created_at: new Date().toISOString(), // Simulate timestamp
+        user_id: userId,
+        created_at: new Date().toISOString(),
       };
 
-      try {
-        const response = await fetch(`http://localhost:3000/conversations/${conversation_id}/messages`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newMessage),
-          credentials: 'same-origin',
-        });
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-        if (response.ok) {
-          setMessages((prevMessages) => [...prevMessages, newMessage]);
-          setMessageInput(""); // Clear the input after sending
-        } else {
-          console.error('Failed to send message');
-        }
-      } catch (error) {
-        console.error('Error sending message:', error);
+      if (channel) {
+        channel.sendMessage(messageInput); // Send message through WebSocket channel
       }
+      setMessageInput('');
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();  // Prevent form submission or new line
+      handleSendMessage();
     }
   };
 
@@ -98,6 +122,7 @@ const ChatWindow = () => {
           type="text"
           value={messageInput}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}  // Handle Enter key to send
           placeholder="Type your message..."
           className="message-input"
         />
