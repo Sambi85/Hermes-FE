@@ -86,6 +86,7 @@ const ChatWindow = () => {
         body: messageInput,
         user_id: userId,
         created_at: new Date().toISOString(),
+        sender_id: userId
       };
 
       setMessages((prevMessages) => [...prevMessages, newMessage]);
