@@ -7,19 +7,19 @@
 # Setup
 
 1. **Clone the repository:**
-First, you'll need to clone the Git repository that contains your React project. Open your terminal and run:
+- You'll need to clone the Git repository that contains your React project.
+- Navigate to the directory where you want to clone the repository.
+- Open your terminal and run...
 
 **Copy**
 ```bash
-git clone <repository-url>
-Replace <repository-url> with the actual URL of your repository (for example, https://github.com/username/repo.git).
+git clone https://github.com/Sambi85/Hermes-FE.git
 ```
 After cloning, navigate into the project directory:
 
 **Copy**
 ```bash
-cd <project-directory>
-Replace <project-directory> with the actual folder name of your project.
+cd <YOUR TARGET DIRECTORY>
 ```
 
 2. **Install dependencies:**
@@ -30,7 +30,6 @@ If the project uses npm:
 **Copy**
 ```bash
 npm install
-If the project uses yarn:
 ```
 
 3. **Run the development server:**
