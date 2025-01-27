@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { AuthProvider } from './context/AuthContext';
 import LandingPage from './pages/LandingPage';
 import ChatWindow from './ChatWindow';
@@ -17,10 +18,20 @@ const ChatPage = () => {
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/conversations/:id" element={<ProtectedRoute element={ChatPage} />} />
-    </Routes>
+    <>
+      <Helmet>
+        {/* Global meta tags */}
+        <meta httpEquiv="Content-Security-Policy" content="default-src 'self';" />
+        <meta httpEquiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
+      </Helmet>
+      
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/conversations/:id" element={<ProtectedRoute element={ChatPage} />} />
+      </Routes>
+    </>
   );
 };
 
