@@ -1,0 +1,80 @@
+.landing-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  display: flex;
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  min-height: 100vh; /* Ensure the content takes at least the full viewport height */
+  background-color: #f4f4f4;
+}
+
+.conversation-container {
+  width: 100%;
+  max-width: 800px; /* Limit the maximum width of the container */
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+h2 {
+  margin-bottom: 20px;
+  text-align: center; /* Centers the title */
+}
+
+.conversation-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.conversation-item {
+  display: flex;
+  justify-content: space-between; /* Aligns the name to the left and the timestamp to the right */
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.conversation-link {
+  text-decoration: none;
+  color: #333;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Ensures the children are spaced out */
+  align-items: center; /* Centers items vertically */
+}
+
+.conversation-name {
+  font-weight: bold;
+}
+
+.conversation-timestamp {
+  font-size: 0.9rem;
+  color: #666;
+  white-space: nowrap; /* Prevents wrapping of the timestamp */
+}
+
+.loading {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
+
+.logout-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.logout-button:hover {
+  background-color: #ff1a1a;
+}
