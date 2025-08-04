@@ -1,7 +1,7 @@
 # Hermes, a simple chat application (Front-End)
 ![My Image](public/hermes-logo.jpeg)
 
-# Summary
+# Summary - Currently WIP
 - This is the front-end React application for Hermes, a simple chat app designed to provide users with an intuitive messaging experience. Built using React.js, the app focuses on delivering real-time communication with a clean and responsive user interface. The front-end interacts with a back-end API to manage user messages, chat rooms, and user authentication, ensuring seamless communication. With a focus on performance and user-friendly design, this project demonstrates a modern approach to building interactive web applications.
 
 # Setup
